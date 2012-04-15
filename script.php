@@ -40,9 +40,6 @@ echo "1 record added";
         echo "Missing input!";
     }
 } else if ($type == "edustaja") {
-    // Opiskelijan muuttujat sisaan
-    $enimi = $_POST["enimi"];
-    $snimi = $_POST["snimi"];
     $numero = $_POST["numero"];
 
     if (!empty($enimi) && !empty($snimi) && !empty($numero) ) {
@@ -51,7 +48,7 @@ echo "1 record added";
     $db_handle = pg_connect($options);
     
     // Muodostetaan query
-    $query = "insert into Edustaja values('$enimi','$snimi','$numero')";
+    $query = "insert into Edustaja values('$numero')";
     $result = pg_exec($db_handle, $query);
     if ($result) {
     echo "The query executed successfully.<br>\n";
@@ -113,6 +110,20 @@ echo "1 record added";
         }
         echo "1 record added"; 
     
+} else if ($type == 'aanet') {
+    $numero = $_POST["numero"];
+    $edustaja = $_POST["edustaja"];
+    $aanestyspaikka = $_POST["aanestyspaikka"];
+    $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
+    $db_handle = pg_connect($options);
+    $query = "insert into paikka_aanet values('$edustaja','$aanestyspaikka','$numero')";
+    $result = pg_exec($db_handle, $query);
+        if ($result) {
+        echo "The query executed successfully.<br>\n";
+        } else {
+        die('Error: '.mysql.error());
+        }
+        echo "1 record added"; 
 }
 ?>
 </body>

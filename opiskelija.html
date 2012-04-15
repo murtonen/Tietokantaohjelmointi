@@ -10,9 +10,19 @@ and open the template in the editor.
     </head>
     <form action="http://www.cs.uta.fi/~vm92179/script.php" method="post">
     <input type="hidden" name="type" value="opiskelija" />
-    Opiskelijanumero: <input type="text" name="numero"><BR>
-    Etunimi: <input type="text" name="enimi"><BR> 
-    Sukunimi: <input type="text" name="snimi"><BR> 
-    <input type="submit" value="submit">
+    <table>
+        <tr>
+            <td>Opiskelijanumero</td>
+            <td>Etunimi</td>
+            <td>Sukunimi</td>
+        </tr>
+        <tr>
+            <td><input type="text" name="numero"></td>
+            <td><input type="text" name="enimi"></td>
+            <td><input type="text" name="snimi"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="submit"></td>
+        </tr>
     </form>
 </html>
