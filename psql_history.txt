@@ -1,0 +1,500 @@
+\d ajaja
+create table Tuloksia (ID SERIAL PRIMARY KEY NOT NULL,Status VARCHAR(32) NOT NULL,Aika TIME,Ajaja INTEGER NOT NULL,CONSTRAINT Tuloksia_AjajaFOREIGN KEY (Ajaja)REFERENCES Talli (Tunnus)ON UPDATE CASCADEON DELETE CASCADE);
+\d ajaja
+drop table Tuloksia;
+\d
+create table Tuloksia (ID SERIAL PRIMARY KEY NOT NULL,Status VARCHAR(32) NOT NULL,Aika TIME,Ajaja INTEGER NOT NULL,CONSTRAINT Tuloksia_AjajaFOREIGN KEY (Ajaja)REFERENCES Ajaja (Tunnus)ON UPDATE CASCADEON DELETE CASCADE);
+\d
+create table Etappi (ID SERIAL PRIMARY KEY NOT NULL, Numero INTEGER NOT NULL,Status VARCHAR(32) NOT NULL,Aika TIME,Ajaja INTEGER NOT NULL,CONSTRAINT Tuloksia_AjajaFOREIGN KEY (Ajaja)REFERENCES Ajaja (Tunnus)ON UPDATE CASCADEON DELETE CASCADE);
+\d
+create table Kilpailu ( ID SERIAL PRIMARY KEY NOT NULL,Tunnus INTEGER NOT NULL, Nimi VARCHAR(64) NOT NULL,Jarjestamisvuodi DATE NOT NULL,Etappi INTEGER,CONSTRAINT Kilpailu_EtappiFOREIGN KEY (Etappi)REFERENCES Etappi (ID)ON UPDATE CASCADEON DELETE CASCADE);
+\d Kilpailu
+drop table Kilpailu;
+drop table Etappi;
+create table Etappi (ID SERIAL PRIMARY KEY NOT NULL,Numero INTEGER NOT NULL,Lahtopaikka VARCHAR(64),Maalipaikka VARCHAR(64),);
+drop table Etappi;
+create table Etappi (ID SERIAL PRIMARY KEY NOT NULL,Numero INTEGER NOT NULL,Lahtopaikka VARCHAR(64) NOT NULL,Maalipaikka VARCHAR(64) NOT NULL,Pituus INTEGER NOT NULL,Paivamaara DATE NOT NULL,Tulos INTEGER,Ajaja INTEGER,CONSTRAINT Etappi_tulosFOREIGN KEY (Tulos)REFERENCES Tuloksia(ID),CONSTRAINT Etappi_ajajaFOREIGN KEY (Ajaja)REFERENCES Ajaja(tunnus)ON UPDATE CASCADEON DELETE CASCADE);
+\d etappi
+create table Kilpailu ( ID SERIAL PRIMARY KEY NOT NULL,Tunnus INTEGER NOT NULL, Nimi VARCHAR(64) NOT NULL,Jarjestamisvuodi DATE NOT NULL,Etappi INTEGER,CONSTRAINT Kilpailu_EtappiFOREIGN KEY (Etappi)REFERENCES Etappi (ID)ON UPDATE CASCADEON DELETE CASCADE);
+\d tali
+\d talli
+insert into talli (nimi,maa,perustamisvuosi) values ('Foobar','Finland',2001);
+insert into talli (nimi,maa,perustamisvuosi) values ('Foobar','Finland',01.01.2001);
+insert into talli (nimi,maa,perustamisvuosi) values ('Foobar','Finland','01.01.2001');
+select * from talli;
+insert into talli (nimi,maa,perustamisvuosi) values ('BarFoo','Sweden','2002');
+insert into talli (nimi,maa,perustamisvuosi) values ('BarFoo','Sweden','01.01.2002');
+insert into talli (nimi,maa,perustamisvuosi) values ('GoDenmark','Denmark','01.01.2003');
+\d ajaja
+insert into ajaja(etunimi,sukunimi,syntaika,talli) VALUES ('Mikko','Mallikas','20.12.1979',1);
+insert into ajaja(etunimi,sukunimi,syntaika,talli) VALUES ('Mikko','Mallikas','12.20.1979',1);
+insert into ajaja(etunimi,sukunimi,syntaika,talli) VALUES ('Matti','Mahtava','10.10.1985',2);
+insert into ajaja(etunimi,sukunimi,syntaika,talli) VALUES ('Riikka','Raskas','10.10.1986',3);
+select * from ajaja;
+\d etappi
+\d etappi
+\q
+\c vm92179
+drop table etappi;
+drop table kilpailu;
+drop table etappi;
+create table Etappi (ID SERIAL PRIMARY KEY NOT NULL,Numero INTEGER NOT NULL,Lahtopaikka VARCHAR(64) NOT NULL,Maalipaikka VARCHAR(64) NOT NULL,Pituus INTEGER NOT NULL,Paivamaara DATE NOT NULL,Tulos INTEGER,CONSTRAINT Etappi_tulosFOREIGN KEY (Tulos)REFERENCES Tuloksia(ID),CONSTRAINT Etappi_ajajaFOREIGN KEY (Ajaja)REFERENCES Ajaja(tunnus)ON UPDATE CASCADEON DELETE CASCADE, CHECK (Numero>9));
+drop table etappi;
+create table Etappi (ID SERIAL PRIMARY KEY NOT NULL,Numero INTEGER NOT NULL,Lahtopaikka VARCHAR(64) NOT NULL,Maalipaikka VARCHAR(64) NOT NULL,Pituus INTEGER NOT NULL,Paivamaara DATE NOT NULL,Tulos INTEGER,CONSTRAINT Etappi_tulosFOREIGN KEY (Tulos)REFERENCES Tuloksia(ID)ON UPDATE CASCADEON DELETE CASCADE, CHECK (Numero>9));
+create table Kilpailu ( ID SERIAL PRIMARY KEY NOT NULL,Tunnus INTEGER NOT NULL, Nimi VARCHAR(64) NOT NULL,Jarjestamisvuodi DATE NOT NULL,Etappi INTEGER,CONSTRAINT Kilpailu_EtappiFOREIGN KEY (Etappi)REFERENCES Etappi (ID)ON UPDATE CASCADEON DELETE CASCADE);
+\d tuloksia
+insert into tuloksia(status,aika,ajaja) VALUES ('OK','10:00:00',1);
+insert into tuloksia(status,aika,ajaja) VALUES ('OK','11:00:00',2);
+insert into tuloksia(status,aika,ajaja) VALUES ('HYLATTY','5:00:00',3);
+select * from tuloksia;
+\d etappi
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) (1,'Helsinki','Tampere',300,'09.09.2011',1);
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) VALUES (1,'Helsinki','Tampere',300,'09.09.2011',1);
+\d etappi
+alert table etappidrop constraint etappi_numero_check;
+alter table etappidrop constraint etappi_numero_check;
+ALTER TABLE EtappiADD CONSTRAINT etappi_numero_check CHECK (numero > 0);
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) VALUES (1,'Helsinki','Tampere',300,'09.09.2011',1);
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) VALUES (1,'Helsinki','Tampere',300,'09.09.2011',2);
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) VALUES (1,'Helsinki','Tampere',300,'09.09.2011',3);
+select * from etappi;
+drop table kilpailu;
+create table Kilpailu ( ID SERIAL PRIMARY KEY NOT NULL,Tunnus INTEGER NOT NULL, Nimi VARCHAR(64) NOT NULL,Jarjestamisvuodi DATE NOT NULL,Etappi INTEGER,CONSTRAINT Kilpailu_EtappiFOREIGN KEY (Etappi)REFERENCES Etappi (Numero)ON UPDATE CASCADEON DELETE CASCADE);
+select * from tuloksia;
+create table Kilpailu ( ID SERIAL PRIMARY KEY NOT NULL,Tunnus INTEGER NOT NULL, Nimi VARCHAR(64) NOT NULL,Jarjestamisvuodi DATE NOT NULL,Etappi INTEGER,ON UPDATE CASCADEON DELETE CASCADE);
+create table Kilpailu ( ID SERIAL PRIMARY KEY NOT NULL,Tunnus INTEGER NOT NULL, Nimi VARCHAR(64) NOT NULL,Jarjestamisvuodi DATE NOT NULL,Etappi INTEGER);
+\d Kilpailu;
+insert into Kilpailu(tunnus,nimi,jarjestamisvuosi,etappi) VALUES (123,'Tour De France','01.01.2008',1);
+drop table kilpailu;
+create table Kilpailu ( ID SERIAL PRIMARY KEY NOT NULL,Tunnus INTEGER NOT NULL, Nimi VARCHAR(64) NOT NULL,Jarjestamisvuosi DATE NOT NULL,Etappi INTEGER);
+insert into Kilpailu(tunnus,nimi,jarjestamisvuosi,etappi) VALUES (123,'Tour De France','01.01.2008',1);
+select * from etappi;
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) VALUES (2,'Hanko','Utsjoki',700,'01.01.2022',1);
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) VALUES (2,'Hanko','Utsjoki',700,'01.01.2022',2);
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) VALUES (2,'Hanko','Utsjoki',700,'01.01.2022',3);
+select * from etappi;
+insert into Kilpailu(tunnus,nimi,jarjestamisvuosi,etappi) VALUES (123,'Tour De France','01.01.2008',2);
+select * from Kilpailu;
+select etunimi,sukunimi from ajaja,tuloksia,etappi,kilpailu where kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND ajaja.tunnus = tuloksia.id;
+select tunnus from 
+select * from tulosinsert into Kilpailu(tunnus,nimi,jarjestamisvuosi,etappi) VALUES (678,'Tour De Europe','01.05.2010',1);
+insert into Kilpailu(tunnus,nimi,jarjestamisvuosi,etappi) VALUES (678,'Tour De Europe','01.05.2010',1);
+insert into Kilpailu(tunnus,nimi,jarjestamisvuosi,etappi) VALUES (678,'Tour De Europe','01.05.2010',2);
+select * from Kilpailu;
+select tunnus from kilpailu,etappi where etappi.numero = '1';
+select tunnus from kilpailu,etappi where etappi.numero = '1' AND etappi.numero = kilpailu.etappi;
+select numero from kilpailu,etappi where etappi.numero = kilpailu.etappi;
+select * from ajaja;
+select * from etappi;
+delete FROM etappi where id = '7';
+delete FROM etappi where id = '6';
+delete FROM etappi where id = '5';
+select * from etappi;
+select * from tulos;
+select * from tuloksia;
+insert into tuloksia(status,aika,ajaja) VALUES ('KESKEYTTI','01:00:00',1);
+insert into tuloksia(status,aika,ajaja) VALUES ('OK','01:00:00',2);
+insert into tuloksia(status,aika,ajaja) VALUES ('OK','05:00:00',3);
+select * from tuloksia;
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) (2,'Utsjoki','Pasila',800,'05.05.2005',4);
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) VALUES (2,'Utsjoki','Pasila',800,'05.05.2005',4);
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) VALUES (2,'Utsjoki','Pasila',800,'05.05.2005',5);
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) VALUES (2,'Utsjoki','Pasila',800,'05.05.2005',6);
+select * from tuloksia;
+select * from etappi;
+select * from kilpailu;
+delete from kilpailu where id = '4';
+delete from kilpailu where id = '3';
+select * from kilpailu;
+select * from etappi;
+insert into tuloksia(status,aika,ajaja) VALUES ('OK','06:00:00',1);
+insert into tuloksia(status,aika,ajaja) VALUES ('OK','07:00:00',2);
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) VALUES (3,'Kollaa','Kuusankoski',100,'03.03.2003',7);
+insert into etappi(numero,lahtopaikka,maalipaikka,pituus,paivamaara,tulos) VALUES (3,'Kollaa','Kuusankoski',100,'03.03.2003',8);
+select * from etappi;
+insert into kilpailu(tunnus,nimi,jarjestamisvuosi,etappi) VALUES(678,'Tour De Europe','01.01.2012',3);
+select * from kilpailu;
+select etunimi,sukunimi,status from kilpailu,etappi,tuloksia,ajaja where kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus;
+select etunimi,sukunimi,status from kilpailu,etappi,tuloksia,ajaja where kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND kilpailu.tunnus='678';
+select * from etappi;
+select * from tulos;
+select * from tuloksia;
+select * from kilpailu;
+select * from tulos;
+select * from tuloksia;
+\d tuloksia
+select * from tuloksia;
+\d Kilpailu
+\d
+\d etappi
+\d ajaja
+\d tuloksia
+\d talli
+\d
+\q
+\c vm92179
+\d
+\d ajaja
+\d ajaja
+\d talli
+q
+\q
+\c vm92179
+select * from etappi;
+\
+\q
+\c vm92179
+\d
+\d kilpailu
+\d etappi
+select * from kilpailu;
+select etunimi,sukunimi from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus NOT IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123) AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 678;
+select etunimi,sukunimi from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123) AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 678;
+select talli.nimi from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123) AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 678;
+select select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select distinct etunimi,sukunimi from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select * from ajaja;
+select distinct ajaja.tunnus,sukunimi,etunimi from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select ajaja.tunnus,sukunimi,etunimi from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select ajaja.tunnus,sukunimi,etunimi from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select * from etappi;
+select * from tuloksia;
+select ajaja.tunnus,sukunimi,etunimi,aika from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select ajaja.tunnus,sukunimi,etunimi,aika,status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 GROUP BY ajaja.tunnus;
+select ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 GROUP BY ajaja.tunnus,ajaja.sukunimi;
+select ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 GROUP BY ajaja.tunnus,ajaja.sukunimi,ajaja.etunimi;
+select ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 GROUP BY ajaja.tunnus,ajaja.sukunimi,ajaja.etunimi,tuloksia.status;
+select distinct ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 GROUP BY ajaja.tunnus,ajaja.sukunimi,ajaja.etunimi,tuloksia.status;
+select distinct ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select distinct ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select distinct ajaja.tunnus,sukunimi,etunimi,aika,status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select * from tuloksia;
+select * from etappi;
+select * from kilpailu;
+select distinct ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select distinct ajaja.tunnus,sukunimi,etunimi,aika,status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select distinct ajaja.tunnus,sukunimi,etunimi,aika,status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 WHERE status='OK';
+select distinct ajaja.tunnus,sukunimi,etunimi,aika,status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 WHERE status LIKE "OK";
+select distinct ajaja.tunnus,sukunimi,etunimi,aika,status from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 AND status ='OK';
+select etunimi,sukunimi from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus NOT IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123) AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 678;
+select  ajaja.tunnus,sukunimi,etunimi,aika,status from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus NOT IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123) AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 678;
+select ajaja.tunnus,sukunimi,etunimi,aika,status from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus NOT IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 AND status = 'KESKEYTTI' OR status = 'HYLATTY') AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 678;
+select  ajaja.tunnus,sukunimi,etunimi,aika,status from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus NOT IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123) AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 678;
+select ajaja.tunnus,sukunimi,etunimi,aika,status from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus NOT IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 AND status = 'KESKEYTTI' OR status = 'HYLATTY') AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id;
+select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 AND status = 'KESKEYTTI' OR status = 'HYLATTY';
+select * from kilpailu;
+select * from etappi;
+select * from tuloksia;
+select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 AND (status = 'KESKEYTTI' OR status = 'HYLATTY');
+select ajaja.tunnus,sukunimi,etunimi,aika,status from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus NOT IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 AND (status = 'KESKEYTTI' OR status = 'HYLATTY')) AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id;
+select ajaja.tunnus,sukunimi,etunimi,aika,status from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus NOT IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 AND (status = 'KESKEYTTI' OR status = 'HYLATTY')) AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus NOT IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 AND (status = 'KESKEYTTI' OR status = 'HYLATTY')) AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123;
+select ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus NOT IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 AND (status = 'KESKEYTTI' OR status = 'HYLATTY')) AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 GROUP BY ajaja.tunnus;
+select ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus NOT IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 AND (status = 'KESKEYTTI' OR status = 'HYLATTY')) AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 GROUP BY ajaja.tunnus,ajaja.sukunimi,ajaja.etunimi;
+select ajaja.tunnus,sukunimi,etunimi,SUM(aika),status from ajaja,tuloksia,etappi,kilpailu,talli WHERE ajaja.tunnus NOT IN (select distinct ajaja.tunnus from ajaja,tuloksia,etappi,kilpailu,talli WHERE kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 AND (status = 'KESKEYTTI' OR status = 'HYLATTY')) AND  kilpailu.etappi = etappi.numero AND etappi.tulos = tuloksia.id AND tuloksia.ajaja = ajaja.tunnus AND ajaja.talli = talli.id AND kilpailu.tunnus = 123 GROUP BY ajaja.tunnus,ajaja.sukunimi,ajaja.etunimi,tuloksia.status;
+create database YK;
+\c
+create database YK;
+create schema YK;
+create table;
+create table yk.OPISKELIJA (OPNUM INTEGER NOT NULL, NIMI VARCHAR(30) NOT NULL, PAA_AINE VARCHAR(30) NOT NULL,PRIMARY KEY OPNUM);
+create table yk.OPISKELIJA (OPNUM INTEGER NOT NULL, NIMI VARCHAR(30) NOT NULL, PAA_AINE VARCHAR(30) NOT NULL, PRIMARY KEY (OPNUM));
+create table yk.KURSSIT (KURSSINRO INTEGER NOT NULL, KURSSINIMI VARCHAR(30) NOT NULL, OPETTAJA VARCHAR(30), PRIMARY KEY (KURSSINRO));
+create table yk.SUORITUS (ONRO INTEGER NOT NULL, KNRO INTEGER NOT NULL, ARVOSANA INTEGER NOT NULL, PRIMARY KEY(ONRO,KNRO), FOREIGN KEY (ONRO) REFERENCES yk.OPISKELIJA(OPNUM), FOREIGN KEY (KNRO) REFERENCES yk.KURSSIT (KURSSINRO));
+create schema TK;
+create table TK.TILIT ( TILINUMERO VARCHAR(30) NOT NULL, SALDO DOUBLE, PRIMARY KEY (TILINUMERO) );
+create table TK.TILIT ( TILINUMERO VARCHAR(30) NOT NULL, SALDO FLOAT, PRIMARY KEY (TILINUMERO) );
+insert into yk.opiskelija("921279","Ville Murtonen", "Tietojenkasittely");
+insert into yk.opiskelija values ("921279","Ville Murtonen", "Tietojenkasittely");
+insert into yk.opiskelija values ('921279','Ville Murtonen','Tietojenkasittely');
+insert into yk.opiskelija values ('76408','Riina Ikonen','Pohjoismaiset Kielet');
+insert into yk.kurssit values ('33200','Tietotekniikan peruskurssi','Mikko Meikalainen');
+insert into yk.kurssit values ('33500','Englannin peruskurssi','Mikko Meikalainen');
+insert into yk.suoritus ('92179','33200','5');
+insert into yk.suoritus values ('92179','33200','5');
+select * from opiskelija;
+alter table yk.suoritus drop FOREIGN KEY (ONRO);
+alter table yk.suoritus drop FOREIGN KEY;
+alter table YK.SUORITUS DROP FOREIGN KEY ONRO;
+alter??;
+? alter;
+alter table yk.suoritus drop constrain foreign key onro;
+alter table yk.suoritus drop constraint 
+drop table suoritus;
+drop table yk-.suoritus;
+drop table yk.suoritus;
+create table yk.SUORITUS (ONRO INTEGER NOT NULL, KNRO INTEGER NOT NULL, ARVOSANA INTEGER NOT NULL, PRIMARY KEY(ONRO,KNRO), FOREIGN KEY (ONRO) REFERENCES yk.OPISKELIJA(OPNUM), FOREIGN KEY (KNRO) REFERENCES yk.KURSSIT (KURSSINRO));
+select * from YK.OPISKELIJA;
+insert into yk.suoritus ('921279','33200','5');
+insert into yk.suoritus values ('921279','33200','5');
+insert into yk.suoritus values ('75408','33500','5');
+insert into yk.suoritus values ('76408','33500','5');
+d
+\d
+\
+\d
+SET search_path TO YK;
+SET search_path TO YK;
+\d
+SET search_path TO TK;
+\d
+insert into tk.tilit values ('800028-1743212','50000,100');
+insert into tk.tilit values ('800028-1743212','50000.100');
+\q
+\d
+\l
+\c 92179
+\c vm92179
+\d
+\l
+\d
+\q
+\c vm92179
+create database TILIT;
+\d
+\l
+create table TILIT(tilinumero varchar(40) PRIMARY KEY, saldo integer not null);
+insert into TILIT VALUES ('20028-12356','0');
+insert into TILIT VALUES ('10037-12345','500');
+\q
+\c vm91279
+select * from tilit;
+q
+\q
+select * from tilit;
+\q
+select * from tilit;
+q
+\q
+select * from tilit;
+\q
+select * from tilit;
+\q
+select * from tilit;
+\q
+select * from tilit;
+\q
+select * from tilit;
+\q
+select * from tilit;
+\q
+\l
+select * from yk.opiskelijat;
+select * from yk.opiskelija;
+select * from yk.kurssit;
+select * from yk.suoritus;
+ls
+\q
+select * from yk.suoritus;
+ls
+\q
+\q
+\c vm92179
+\q
+\c vm92179
+\q
+\q
+select * from yk.kurssi;
+select * from yk.kurssit;
+\q
+\l
+\l
+\c a392378
+\l
+\d
+\q
+alter user vm92179 with password 'salabug1';
+\q
+\q
+\q
+\c vm92179
+select * from yk.kurssit;
+\q
+alter table yk.kurssit ADD COLUMN pisteet integer;
+select * from yk.opiskelija;
+alter table yk.opiskelija ADD COLUMN keskiarvo float;
+select * from yk.opiskelija;
+update yk.kurssit set pisteet = '5' where kurssinro = '33200';
+update yk.kurssit set pisteet = '3' where kurssinro = '33500';
+select * from yk.kurssit;
+select * from yk.suoritukset;
+select * from yk.suoritus;
+insert into yk.suoritus values('92179','33200','3');
+select * from opiskelija;
+select * from yk.opiskelija;
+insert into yk.opiskelija values ('92179','Ville Murtonen','Tietojenkasittely');
+insert into yk.suoritus values('92179','33200','3');
+insert into yk.suoritus values('92179','33500','1');
+select * from yk.suoritus;
+select * from yk.suoritus,yk.kurssit where yk.suoritus.knro=yk.kurssit.kurssinro;
+select * from yk.suoritus,yk.kurssit where yk.suoritus.knro=yk.kurssit.kurssinro AND onro = '92179';
+delete from yk.suoritus where onro = '921279';
+insert into yk.suoritus values('76408','33200','1');
+select * from yk.suoritus,yk.kurssit where yk.suoritus.knro=yk.kurssit.kurssinro AND onro = '92179';
+select * from yk.suoritus,yk.kurssit where yk.suoritus.knro=yk.kurssit.kurssinro;
+select opiskelijanumero from yk.suoritus,yk.kurssit where yk.suoritus.knro=yk.kurssit.kurssinro;
+select onro from yk.suoritus,yk.kurssit where yk.suoritus.knro=yk.kurssit.kurssinro;
+select onro from yk.suoritus,yk.kurssit where yk.suoritus.knro=yk.kurssit.kurssinro UNIQUWE;
+select onro from yk.suoritus,yk.kurssit where yk.suoritus.knro=yk.kurssit.kurssinro UNIQUE;
+select onro from yk.opiskelija;
+select onro from yk.opiskelija;
+select onro from yk.opiskelijat;
+select * from yk.opiskelija;
+delete from yk.opiskelija where opnum = '921279';
+select * from yk.opiskelija;
+select opnum from yk.opiskelija;
+select * from yk.opiskelija;
+select * from yk.suoritukset;
+select * from yk.suoritus;
+\q
+\c vm92179
+);
+create table Opiskelija(Opiskelijanumero integer PRIMARY KEY NOT NULL,Etunimi varchar(20) NOT NULL,Sukunimi varchar(20) NOT NULL,);
+create table Opiskelija(Opiskelijanumero integer PRIMARY KEY NOT NULL,Etunimi varchar(20) NOT NULL,Sukunimi varchar(20) NOT NULL);
+create table Edustaja(Etunimi varchar(20) NOT NULL,Sukunimi varchar(20) NOT NULL,Vaalinumero integer references Opiskelija(Opiskelijanumero) primary key NOT NULL,);
+create table Edustaja(Etunimi varchar(20) NOT NULL,Sukunimi varchar(20) NOT NULL,Vaalinumero integer references Opiskelija(Opiskelijanumero) primary key NOT NULL);
+create table Vaaliliitto(Nimi varchar(30) NOT NULL,Tunnus varchar(10) NOT NULL primary key,Opiskelija integer refences Opiskelija(Opiskelijanumero));
+create table Vaaliliitto(Nimi varchar(30) NOT NULL,Tunnus varchar(10) primary key NOT NULL,Opiskelija integer refences Opiskelija(Opiskelijanumero));
+create table Vaaliliitto(Nimi varchar(30) NOT NULL,Tunnus varchar(10) primary key NOT NULL,Opiskelija integer references Opiskelija(Opiskelijanumero));
+create table Vaalirengas(Nimi varchar(30) NOT NULL,Tunnus varchar(10) primary key NOT NULL,Vaaliliitto varchar(10) references Vaaliliitto(tunnus),Opiskelija integer references Opiskelija(Opiskelijanumero));
+\q
+\q
+select * from opiskelija;
+}
+\q
+describe Edustaja;
+select * from Edustaja;
+\
+ls
+\
+\q
+select * from edustaja;
+select * from vaaliliitto;
+\q
+select * from vaaliliitto;
+\q
+\c vm92179
+select * from vaaliliitto;
+select * from vaaliliitto;
+select * from Vaaliliitto;
+select * from Vaaliliitto;
+\q
+select * from opiskelijat;
+select * from opiskelijat;;
+select * from opiskelija;
+select * from opiskelija;
+select etunimi from opiskelija fetch first 1 rows only where opiskelijanumero = 92179;
+select etunimi from opiskelija limit 1 where opiskelijanumero = 92179;
+select * from opiskelija limit 1;
+select * from vaaliliitto;
+select * from vaaliliitto;
+\q
+drop table vaaliliitto;
+drop table vaalirengas;
+drop table vaaliliitto;
+create table Vaaliliitto(Nimi varchar(30) NOT NULL,Tunnus varchar(10)  NOT NULL,Opiskelija integer references Opiskelija(Opiskelijanumero));
+drop table vaaliliitto;
+create table Vaaliliitto(id SERIAL primary key, Nimi varchar(30) NOT NULL,Tunnus varchar(10)  NOT NULL,;
+create table Vaalirengas(Nimi varchar(30) NOT NULL,Tunnus varchar(10) primary key NOT NULL,Vaaliliitto varchar(10) references Vaaliliitto(tunnus),Opiskelija integer references Opiskelija(Opiskelijanumero));
+drop table vaaliliitto;
+select * from edustaja;
+drop table edustaja;
+create table Vaaliliitto(Nimi varchar(30) NOT NULL,Tunnus varchar(10) primary key NOT NULL);
+drop table vaaliliitto;
+create table Vaalirengas(Nimi varchar(30) NOT NULL,Tunnus varchar(10) primary key NOT NULL);
+create table Vaaliliitto(Nimi varchar(30) NOT NULL,Tunnus varchar(10) primary key NOT NULL,Vaalirengas varchar(10) references Vaalirengas(tunnus));
+create table Edustaja(Etunimi varchar(20) NOT NULL,Sukunimi varchar(20) NOT NULL,Vaalinumero integer references Opiskelija(Opiskelijanumero) primary key NOT NULL, Vaaliliitto varchar(10) references Vaaliliitto(tunnus), Vaalirengas varchar(10) references Vaalirengas(tunnus)); );
+drop table edustaja;
+create table Edustaja(Etunimi varchar(20) NOT NULL,Sukunimi varchar(20) NOT NULL,Vaalinumero integer references Opiskelija(Opiskelijanumero) primary key NOT NULL, Vaaliliitto varchar(10) references Vaaliliitto(tunnus), Vaalirengas varchar(10) references Vaalirengas(tunnus)); );
+\d edustaja;
+select * from vaaliliitto;
+select * from vaaliliitto;
+select * from opiskelija;
+select * from edustaja;
+insert into edustaja values('Ville','Murtonen','92179');
+select * from edustaja;
+select * from edustaja;
+select * from vaaliliitto;
+select * from vaalirengas;
+insert into vaalirengas values('Yhtyneet','YH1');
+select * from vaalirengas;
+select * from edustaja;
+\c vm92179
+\
+\d
+select * from edustaja;
+create table aanestyspaikka (nimi varchar(30) not null,tunnus varchar(10) not null);
+drop table aanestyspaikka;
+create table aanestyspaikka (nimi varchar(30) not null,tunnus varchar(10) primary key not null);
+create table paikka_aanet(;);
+\d edustaja;
+create table paikka_aanet(ehdokas_id integer not null,;));
+create table paikka_aanet(ehdokas_id integer not null references edustaja(vaalinumero),;));
+create table paikka_aanet(ehdokas_id integer not null references edustaja(vaalinumero),paikka_tunnus varchar(10) references aanestyspaikka(tunnus),lkm integer);
+drop table paikka_aanet;
+create table paikka_aanet(ehdokas_id integer not null references edustaja(vaalinumero),paikka_tunnus varchar(10) not null references aanestyspaikka(tunnus),lkm integer);
+\d paikka_aanet;
+\d
+select * from aanestyspaikka;
+insert into aanestyspaikka('Paatalo','PT1');
+insert into aanestyspaikka values('Paatalo','PT1');
+insert into aanestyspaikka values('PinniB','PB1');
+select * from edustaja;
+\d
+\d paikka_aanet;
+select * from paikka_aanet;
+select * from paikka_aanet;
+select * from paikka_aanet;
+select * from opiskelija;
+selcet * from edustaja;
+select * from edustaja;
+insert into edustaja values('Matti','Meikalainen','123456');
+select * from edustaja;
+select * from paikka_aanet;
+drop table edustaja;
+drop table paikka_aanet;
+drop table edustaja;
+create table Edustaja(Vaalinumero integer references Opiskelija(Opiskelijanumero) primary key NOT NULL, Vaaliliitto varchar(10) references Vaaliliitto(tunnus), Vaalirengas varchar(10) references Vaalirengas(tunnus)); );
+create table paikka_aanet(ehdokas_id integer not null references edustaja(vaalinumero),paikka_tunnus varchar(10) not null references aanestyspaikka(tunnus),lkm integer);
+\q
+select * from opiskelija;
+select * from edustaja;
+insert into edustaja values('11122');
+insert into edustaja values('11123');
+insert into edustaja values('11124');
+insert into edustaja values('11125');
+\d
+select * from paikka_aanet;
+select * from edustaja;
+select * from paikka_aanet;
+select * from opiskelija;
+select * from edustaja;
+select * from edustaja;
+select * from paikka_aanet;
+select * from opiskelija,edustaja,paikka_aanet where opiskelija.opiskelijanumero=edustaja.vaalinumero AND paikka_aanet.ehdokas_id=edustaja.vaalinumero order by lkm desc;
+select * from opiskelija,edustaja,paikka_aanet where opiskelija.opiskelijanumero=edustaja.vaalinumero AND paikka_aanet.ehdokas_id=edustaja.vaalinumero order by lkm desc;
+select * from edustaja;
+select * from opiskelija;
+insert into opiskelija values('11126','Esko','Erikoinen');
+insert into edustaja values('11125','ET1');
+select * from edustaja;
+select * from opiskelija,edustaja,paikka_aanet where opiskelija.opiskelijanumero=edustaja.vaalinumero AND paikka_aanet.ehdokas_id=edustaja.vaalinumero order by lkm desc;
+select * from paikka_aanet;
+select * from paikka_aanet;
+update paikka_aanet set lkm=150 where ehdokas_id=11126;
+select * from opiskelija,edustaja,paikka_aanet where opiskelija.opiskelijanumero=edustaja.vaalinumero AND paikka_aanet.ehdokas_id=edustaja.vaalinumero order by liitto,lkm desc;
+select * from opiskelija,edustaja,paikka_aanet where opiskelija.opiskelijanumero=edustaja.vaalinumero AND paikka_aanet.ehdokas_id=edustaja.vaalinumero order by vaaliliitto,lkm desc;
+select * from edustaja;
+update edustaja set vaaliliitto ET1 where vaalinumero=11125;
+update edustaja set vaaliliitto=ET1 where vaalinumero=11125;
+update edustaja set vaaliliitto='ET1' where vaalinumero='11125';
+select * from edustaja;
+select * from opiskelija,edustaja,paikka_aanet where opiskelija.opiskelijanumero=edustaja.vaalinumero AND paikka_aanet.ehdokas_id=edustaja.vaalinumero order by vaaliliitto,lkm desc;
+select * from opiskelija,edustaja,paikka_aanet where opiskelija.opiskelijanumero=edustaja.vaalinumero AND paikka_aanet.ehdokas_id=edustaja.vaalinumero order by vaaliliitto,lkm desc;
+\q
+\c
+\q
