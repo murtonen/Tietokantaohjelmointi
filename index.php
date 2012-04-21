@@ -5,12 +5,13 @@
 </head>
 <body>
 
-<p><H1> Hei! Tervetuloa valtavan hienoon pankkiohjelmaan! </H1></p>
-<form action="http://www.cs.uta.fi/~vm92179/script.php" method="post">
-Tilinumero: <input type="text" name="tilin"><BR>
-Summa: <input type="text" name="summa"><BR> 
-<input type="submit" value="submit">
-</form>
+<p><H1> Koontisivu. </H1></p>
+<a href="opiskelija.html"> opiskelija</a><br>
+<a href="edustaja.html"> edustaja</a><br>
+<a href="vaaliliitto.php"> vaaliliitto</a><br>
+<a href="liitaopiskelija.php"> liitaopiskelija</a><br>
+<a href="lisaa_aanet.php"> lisaa_aanet</a><br>
+<a href="laske_aanet.php"> laske_aanet</a><br>
 
 </body>
 </html>
