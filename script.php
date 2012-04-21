@@ -10,11 +10,13 @@
 
 <?php
 
-// Muuttujat sisaan
+// Tyyppimuuttuja sisään
 $type = $_POST["type"];
 
+// Tietokannan alustus
+$options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
+$db_handle = pg_connect($options);
 
-// Tarkistukset oliko niissa tavaraa
 if ($type == "opiskelija") {
     
     // Opiskelijan muuttujat sisaan
@@ -22,60 +24,57 @@ if ($type == "opiskelija") {
     $snimi = $_POST["snimi"];
     $numero = $_POST["numero"];
 
+    // Tarkistetaan ettei ollu tyhjia
     if (!empty($enimi) && !empty($snimi) && !empty($numero) ) {
-    // Tietokannan alustus
-    $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-    $db_handle = pg_connect($options);
+    // Tietokannan alustus 
     
     // Muodostetaan query
     $query = "insert into Opiskelija values('$numero','$enimi','$snimi')";
     $result = pg_exec($db_handle, $query);
     if ($result) {
     echo "The query executed successfully.<br>\n";
+    echo "1 record added";
+    echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
     } else {
-        die('Error: '.mysql.error());
+        die('Error: '.print pg_last_error($db_handle));
     }
-echo "1 record added";
     } else {
         echo "Missing input!";
     }
 } else if ($type == "edustaja") {
+    
+    // Edustajan opiskelijanumero sisaan
     $numero = $_POST["numero"];
 
-    if (!empty($enimi) && !empty($snimi) && !empty($numero) ) {
-    // Tietokannan alustus
-    $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-    $db_handle = pg_connect($options);
-    
-    // Muodostetaan query
-    $query = "insert into Edustaja values('$numero')";
-    $result = pg_exec($db_handle, $query);
-    if ($result) {
-    echo "The query executed successfully.<br>\n";
-    } else {
-        die('Error: '.mysql.error());
-    }
-echo "1 record added";
+    // Tarkistetaan tyhjien varalta
+    if (!empty($numero)) {
+        
+        // Muodostetaan query
+        $query = "insert into Edustaja values('$numero')";
+        $result = pg_exec($db_handle, $query);
+        if ($result) {
+            echo "The query executed successfully.<br>\n";
+            echo "1 record added";
+            echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
+        } else {
+            die('Error: '.print pg_last_error($db_handle));
+        }
     } else {
         echo "Missing input!";
     }
-    
 } else if ($type == "vaaliliitto") {
     // Muuttujat sisaan
     $nimi = $_POST["nimi"];
     $tunnus = $_POST["tunnus"];
-        
-    // Tietokannan alustus
-    $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-    $db_handle = pg_connect($options);
 
     $query = "insert into Vaaliliitto values('$nimi','$tunnus')";
     $result = pg_exec($db_handle, $query);
     if ($result) {
         echo "The query executed successfully.<br>\n";
         echo "1 record added";
+        echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
     } else {
-        die('Error: '.mysql.error());
+        die('Error: '.print pg_last_error($db_handle));
     }
     
 } else if ($type == "liitto") {
@@ -83,60 +82,58 @@ echo "1 record added";
     // Muuttujat sisaan
     $numero = $_POST["numero"];
     $vaaliliitto = $_POST["vaaliliitto"];
-    $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-    $db_handle = pg_connect($options);
+ 
     $query = "update edustaja set vaaliliitto = '$vaaliliitto' where vaalinumero = '$numero'";
     $result = pg_exec($db_handle, $query);
         if ($result) {
         echo "The query executed successfully.<br>\n";
+        echo "1 record added";
+        echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
         } else {
-        die('Error: '.mysql.error());
+        die('Error: '.print pg_last_error($db_handle));
         }
-        echo "1 record added";   
 } else if ($type == "rengas") {
     $numero = $_POST["numero"];
     $vaalirengas = $_POST["vaalirengas"];
-    $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-    $db_handle = pg_connect($options);
+    
     $query = "update edustaja set vaalirengas = '$vaalirengas' where vaalinumero = '$numero'";
     $result = pg_exec($db_handle, $query);
         if ($result) {
         echo "The query executed successfully.<br>\n";
+        echo "1 record added";
+        echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
         } else {
-        die('Error: '.mysql.error());
-        }
-        echo "1 record added"; 
-    
+        die('Error: '.print pg_last_error($db_handle));
+        }  
 } else if ($type == 'aanet') {
     $numero = $_POST["numero"];
     $edustaja = $_POST["edustaja"];
     $aanestyspaikka = $_POST["aanestyspaikka"];
-    $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-    $db_handle = pg_connect($options);
+    
     $query = "insert into paikka_aanet values('$edustaja','$aanestyspaikka','$numero')";
     $result = pg_exec($db_handle, $query);
         if ($result) {
         echo "The query executed successfully.<br>\n";
+        echo "1 record added";        
+        echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
         } else {
-        die('Error: '.mysql.error());
+        die('Error: '.print pg_last_error($db_handle));
         }
-        echo "1 record added"; 
+
 } else if ($type == "vaalirengas") {
     // Muuttujat sisaan
     $nimi = $_POST["nimi"];
     $tunnus = $_POST["tunnus"];
        
-    // Tietokannan alustus
-    $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-    $db_handle = pg_connect($options);
-
     $query = "insert into vaalirengas values('$nimi','$tunnus')";
     $result = pg_exec($db_handle, $query);
     if ($result) {
         echo "The query executed successfully.<br>\n";
         echo "1 record added";
+        
     } else {
-        die('Error: '.mysql.error());
+        die('Error: '.print pg_last_error($db_handle));
+        echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
     }
  }
 ?>
