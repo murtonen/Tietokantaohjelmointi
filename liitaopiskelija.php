@@ -18,6 +18,8 @@ and open the template in the editor.
     $selects.="<OPTION VALUE=\"choose\"> Valitse </option>";
     $selectstwo="";
     $selectstwo.="<OPTION VALUE=\"choose\"> Valitse </option>";
+    $selectsthree="";
+    $selectsthree.="<OPTION VALUE=\"choose\"> Valitse </option>";
     while ($row = pg_fetch_row($result)) {
         $nimi=$row[0];
         $tunnus=$row[1];
@@ -30,11 +32,22 @@ and open the template in the editor.
         $tunnus=$row[1];
         $selectstwo.="<OPTION VALUE=\"$tunnus\">".$nimi.'</option>';
     }
+    $query="SELECT * FROM edustaja";
+    $result = pg_exec($db_handle, $query);
+        while ($row = pg_fetch_row($result)) {
+        $nimi=$row[0];
+        $tunnus=$row[0];
+        $selectsthree.="<OPTION VALUE=\"$tunnus\">".$nimi.'</option>';
+    }
     ?>
         <p> Liita opiskelija vaaliliittoon. </p>
         <form name="liitos" action="http://www.cs.uta.fi/~vm92179/script.php" method="post">
             <input type="hidden" name="type" value="liitto" />
-            Edustajan opiskelijanumero: <input type="text" name="numero" />
+            Edustajan opiskelijanumero:
+            <SELECT NAME="numero">
+            <?php echo $selectsthree;
+            ?>
+            </SELECT>
             <SELECT NAME="vaaliliitto">
             <?php echo $selects;
             ?>
@@ -44,7 +57,11 @@ and open the template in the editor.
         <p> Liita opiskelija vaalirenkaaseen. </p>
         <form name="liitos" action="http://www.cs.uta.fi/~vm92179/script.php" method="post">
             <input type="hidden" name="type" value="rengas" />
-            Edustajan opiskelijanumero: <input type="text" name="numero" />
+            Edustajan opiskelijanumero:
+            <SELECT NAME="numero">
+            <?php echo $selectsthree;
+            ?>
+            </SELECT>
             <SELECT NAME="vaalirengas">
             <?php echo $selectstwo;
             ?>

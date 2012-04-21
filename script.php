@@ -62,25 +62,22 @@ echo "1 record added";
     
 } else if ($type == "vaaliliitto") {
     // Muuttujat sisaan
-    $numero = $_POST["numero"];
     $nimi = $_POST["nimi"];
     $tunnus = $_POST["tunnus"];
-    $vaaliliitto = $_POST["vaaliliitto"];
-    
+        
     // Tietokannan alustus
     $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
     $db_handle = pg_connect($options);
 
-    if ($vaaliliitto == "new") {
-        $query = "insert into Vaaliliitto values('$nimi','$tunnus')";
-        $result = pg_exec($db_handle, $query);
-        if ($result) {
+    $query = "insert into Vaaliliitto values('$nimi','$tunnus')";
+    $result = pg_exec($db_handle, $query);
+    if ($result) {
         echo "The query executed successfully.<br>\n";
-        } else {
-        die('Error: '.mysql.error());
-        }
         echo "1 record added";
+    } else {
+        die('Error: '.mysql.error());
     }
+    
 } else if ($type == "liitto") {
         
     // Muuttujat sisaan
@@ -124,7 +121,24 @@ echo "1 record added";
         die('Error: '.mysql.error());
         }
         echo "1 record added"; 
-}
+} else if ($type == "vaalirengas") {
+    // Muuttujat sisaan
+    $nimi = $_POST["nimi"];
+    $tunnus = $_POST["tunnus"];
+       
+    // Tietokannan alustus
+    $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
+    $db_handle = pg_connect($options);
+
+    $query = "insert into vaalirengas values('$nimi','$tunnus')";
+    $result = pg_exec($db_handle, $query);
+    if ($result) {
+        echo "The query executed successfully.<br>\n";
+        echo "1 record added";
+    } else {
+        die('Error: '.mysql.error());
+    }
+ }
 ?>
 </body>
 </html>
