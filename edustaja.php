@@ -21,6 +21,7 @@ and open the template in the editor.
         $tunnus=$row[0];
         $selects.="<OPTION VALUE=\"$tunnus\">".$nimi.'</option>';
     }
+    ?>
     <p> Lisaa opiskelija edustajaksi </p>
     <form action="http://www.cs.uta.fi/~vm92179/script.php" method="post">      
     <input type="hidden" name="type" value="edustaja" />
