@@ -7,7 +7,7 @@
 
 <p><H1> Koontisivu. </H1></p>
 <a href="opiskelija.html"> opiskelija</a><br>
-<a href="edustaja.html"> edustaja</a><br>
+<a href="edustaja.php"> edustaja</a><br>
 <a href="vaaliliitto.php"> vaaliliitto</a><br>
 <a href="liitaopiskelija.php"> liitaopiskelija</a><br>
 <a href="lisaa_aanet.php"> lisaa_aanet</a><br>
