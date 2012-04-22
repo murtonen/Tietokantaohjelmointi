@@ -12,6 +12,8 @@
 <a href="liitaopiskelija.php"> liitaopiskelija</a><br>
 <a href="lisaa_aanet.php"> lisaa_aanet</a><br>
 <a href="laske_aanet.php"> laske_aanet</a><br>
+<a href="jarjestysluvut.php"> jarjestysluvut</a><br>
+<a href="tulokset.php"> tulokset</a><br>
 
 </body>
 </html>
