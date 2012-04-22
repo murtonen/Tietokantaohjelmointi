@@ -144,7 +144,7 @@ and open the template in the editor.
                         echo "<td>$row[0]</td>\n";
                         $jakaja = $row[0];
                         $vertailuku1 = $liitonaanet / $jakaja;
-                        $vertailuku = number_format($vertailuku1, 5);
+                        $vertailuku = number_format($vertailuku1, 5, '.', '' );
                         $query = "update edustaja set vertailuluku='$vertailuku' where vaalinumero='$row[1]'";
                         $update = pg_exec($db_handle, $query);
                         echo "<td>$vertailuku</td>\n";
@@ -306,7 +306,7 @@ and open the template in the editor.
                         echo "<td>$row[0]</td>\n";
                         $jakaja = $row[0];
                         $vertailuku1 = $renkaanaanet / $jakaja;
-                        $vertailuku = number_format($vertailuku1, 5);
+                        $vertailuku = number_format($vertailuku1, 5, '.', '' );
                         $query = "update edustaja set rengasvertailuluku='$vertailuku' where vaalinumero='$row[1]'";
                         $update = pg_exec($db_handle, $query);
                         echo "<td>$vertailuku</td>\n";
