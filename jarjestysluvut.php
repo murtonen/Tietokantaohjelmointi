@@ -343,7 +343,7 @@ and open the template in the editor.
             echo "Error!\n<br>";
             die('Error: ' . print pg_last_error($db_handle));
         }
-        
+        echo "<br><a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
         ?>
     </body>
 </html>

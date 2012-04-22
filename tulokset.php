@@ -10,11 +10,10 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        
         // Tietokannan alustus
         $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
         $db_handle = pg_connect($options);
-        
+
         // Alustetaan muuttujia
         $arvontaluku = -1;
         $edellinen = -1;
@@ -40,14 +39,14 @@ and open the template in the editor.
 
             // Tuloksien lapikaynti ja mahdolliset arvonnat
             while ($rivi = pg_fetch_row($result)) {
-                
+
                 // Otetaan ylos liitto, rengas ja arvontoihin osallistumine
                 $liitto = $rivi[1];
                 $rengas = $rivi[2];
                 $liittoluku = $rivi[3];
                 $rengasluku = $rivi[4];
                 $arvonnoissa = $rivi[5];
-                
+
                 // Tehdaan array johon laitetaan arvonnan edustajat
                 $arvonta = array();
 
@@ -114,36 +113,37 @@ and open the template in the editor.
         }
         // Tulostetaan tulokset
         echo "<br>Edustajistovaalien viralliset tulokset:<br>";
-                // Piirrellaan tulokset
-                echo "<table>\n";
+        // Piirrellaan tulokset
+        echo "<table>\n";
+        echo "<tr>\n";
+        echo "<td> Sijanumero</td>\n";
+        echo "<td> Edustaja </td>\n";
+        echo "<td> Liitto</td>\n";
+        echo "<td> Liittovertailuluku</td>\n";
+        echo "<td> Rengas</td>\n";
+        echo "<td> Rengasvertailuluku</td>\n";
+        echo "<td> Arvonnoissa</td>\n";
+        echo "</tr>\n";
+        $query = "select * from tulos";
+        $tuloskysely = pg_exec($db_handle, $query);
+        if ($tuloskysely) {
+            while ($row = pg_fetch_row($tuloskysely)) {
                 echo "<tr>\n";
-                echo "<td> Sijanumero</td>\n";
-                echo "<td> Edustaja </td>\n";
-                echo "<td> Liitto</td>\n";
-                echo "<td> Liittovertailuluku</td>\n";
-                echo "<td> Rengas</td>\n";
-                echo "<td> Rengasvertailuluku</td>\n";
-                echo "<td> Arvonnoissa</td>\n";
+                echo "<td>$row[0]</td>\n";
+                echo "<td>$row[1]</td>\n";
+                echo "<td>$row[2]</td>\n";
+                echo "<td>$row[5]</td>\n";
+                echo "<td>$row[3]</td>\n";
+                echo "<td>$row[4]</td>\n";
+                echo "<td>$row[6]</td>\n";
                 echo "</tr>\n";
-                $query = "select * from tulos";
-                $tuloskysely = pg_exec($db_handle, $query);
-                if ($tuloskysely) {
-                    while ($row = pg_fetch_row($tuloskysely)) {
-                        echo "<tr>\n";
-                        echo "<td>$row[0]</td>\n";
-                        echo "<td>$row[1]</td>\n";
-                        echo "<td>$row[2]</td>\n";
-                        echo "<td>$row[5]</td>\n";
-                        echo "<td>$row[3]</td>\n";
-                        echo "<td>$row[4]</td>\n";
-                        echo "<td>$row[6]</td>\n";
-                        echo "</tr>\n";
-                    }
-                    echo "</table>\n<br><br>";
-                } else {
-                    echo "Error!\n<br>";
-                    die('Error: ' . print pg_last_error($db_handle));
-                }
+            }
+            echo "</table>\n<br><br>";
+        } else {
+            echo "Error!\n<br>";
+            die('Error: ' . print pg_last_error($db_handle));
+        }
+        echo "<br><a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
         ?>
     </body>
 </html>
