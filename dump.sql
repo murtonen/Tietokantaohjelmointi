@@ -61,7 +61,10 @@ ALTER TABLE public.aanestyspaikka OWNER TO vm92179;
 CREATE TABLE edustaja (
     vaalinumero integer NOT NULL,
     vaaliliitto character varying(10),
-    vaalirengas character varying(10)
+    vaalirengas character varying(10),
+    vertailuluku double precision,
+    rengasvertailuluku double precision,
+    arvonnoissa character varying(10)
 );
 
 
@@ -203,12 +206,17 @@ PinniB	PB1
 -- Data for Name: edustaja; Type: TABLE DATA; Schema: public; Owner: vm92179
 --
 
-COPY edustaja (vaalinumero, vaaliliitto, vaalirengas) FROM stdin;
-11124	\N	\N
-11122	ET1	\N
-11123	\N	YH1
-11126	ET1	\N
-11125	ET1	\N
+COPY edustaja (vaalinumero, vaaliliitto, vaalirengas, vertailuluku, rengasvertailuluku, arvonnoissa) FROM stdin;
+123456	ET1	YH1	600	550	LI
+11123	\N	YH1	150	275	RE
+11126	ET1	YH1	300	183.333329999999989	RE
+11124	KT1	\N	233.333329999999989	233.333329999999989	LI
+11122	ET1	\N	400	400	LI
+11125	ET1	\N	240	240	LI
+92179	KT1	\N	350	350	LI
+443234	KT1	\N	700	700	\N
+54654	ET1	\N	200	200	\N
+87214	ET1	\N	1200	1200	\N
 \.
 
 
@@ -225,6 +233,8 @@ COPY opiskelija (opiskelijanumero, etunimi, sukunimi) FROM stdin;
 11124	Pertti	Perus
 11125	Otto	Olio
 11126	Esko	Erikoinen
+87214	Pekka	Ilmarinen
+54654	Jaakko	Parantainen
 \.
 
 
@@ -238,6 +248,13 @@ COPY paikka_aanet (ehdokas_id, paikka_tunnus, lkm) FROM stdin;
 11124	PT1	100
 11126	PB1	150
 11125	PB1	100
+11122	PB1	100
+11125	PT1	50
+92179	PT1	100
+443234	PT1	500
+123456	PB1	250
+54654	PT1	100
+87214	PB1	300
 \.
 
 
