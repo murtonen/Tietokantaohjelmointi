@@ -18,32 +18,39 @@
     </tr>
     
 <?php
-    $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-    $db_handle = pg_connect($options);
+    include('yhteys.php');
+    //$options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
+    $db_handle = dbconnect();
     
     // Muodostetaan query
-    $query = "select * from opiskelija,edustaja,paikka_aanet where opiskelija.opiskelijanumero=edustaja.vaalinumero AND paikka_aanet.ehdokas_id=edustaja.vaalinumero order by vaaliliitto,lkm desc";
+    $query = "SELECT * FROM opiskelija, edustaja, paikka_aanet WHERE opiskelija.opiskelijanumero=edustaja.vaalinumero ". 
+        "AND paikka_aanet.ehdokas_id=edustaja.vaalinumero ORDER BY vaaliliitto,lkm desc";
     $result = pg_exec($db_handle, $query);
     while ($row = pg_fetch_row($result)) {
         echo "<tr>";
-        echo "<td>";
-        echo $row[0];
-        echo "</td>\n";
-        echo "<td>";
-        echo $row[1];
-        echo "</td>\n";
-        echo "<td>";
-        echo $row[2];
-        echo "</td>\n";
-        echo "<td>";
-        echo $row[4];
-        echo "</td>\n";
-        echo "<td>";
-        echo $row[5];
-        echo "</td>\n";
-        echo "<td>";
-        echo $row[8];
-        echo "</td>\n";
+            echo "<td>";
+            echo $row[0];
+            echo "</td>\n";
+            
+            echo "<td>";
+            echo $row[1];
+            echo "</td>\n";
+            
+            echo "<td>";
+            echo $row[2];
+            echo "</td>\n";
+            
+            echo "<td>";
+            echo $row[4];
+            echo "</td>\n";
+            
+            echo "<td>";
+            echo $row[5];
+            echo "</td>\n";
+            
+            echo "<td>";
+            echo $row[11];
+            echo "</td>\n";
         echo "</tr>";
     }
 ?>

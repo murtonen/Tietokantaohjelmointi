@@ -10,11 +10,14 @@
 
         <?php
         // Tyyppimuuttuja sisään
+        
+       include('yhteys.php');
+        
         $type = $_POST["type"];
 
         // Tietokannan alustus
-        $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-        $db_handle = pg_connect($options);
+        //$options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
+        $db_handle = dbconnect();
 
         if ($type == "opiskelija") {
 
@@ -32,7 +35,7 @@
                 if ($result) {
                     echo "The query executed successfully.<br>\n";
                     echo "1 record added";
-                    echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
+                    echo "<a href=\"index.php\"> Back </a>";
                 } else {
                     die('Error: ' . print pg_last_error($db_handle));
                 }
@@ -53,7 +56,7 @@
                 if ($result) {
                     echo "The query executed successfully.<br>\n";
                     echo "1 record added";
-                    echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
+                    echo "<a href=\"index.php\"> Back </a>";
                 } else {
                     die('Error: ' . print pg_last_error($db_handle));
                 }
@@ -70,7 +73,7 @@
             if ($result) {
                 echo "The query executed successfully.<br>\n";
                 echo "1 record added";
-                echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
+                echo "<a href=\"index.php\"> Back </a>";
             } else {
                 die('Error: ' . print pg_last_error($db_handle));
             }
@@ -85,7 +88,7 @@
             if ($result) {
                 echo "The query executed successfully.<br>\n";
                 echo "1 record added";
-                echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
+                echo "<a href=\"index.php\"> Back </a>";
             } else {
                 die('Error: ' . print pg_last_error($db_handle));
             }
@@ -98,7 +101,7 @@
             if ($result) {
                 echo "The query executed successfully.<br>\n";
                 echo "1 record added";
-                echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
+                echo "<a href=\"index.php\"> Back </a>";
             } else {
                 die('Error: ' . print pg_last_error($db_handle));
             }
@@ -112,7 +115,7 @@
             if ($result) {
                 echo "The query executed successfully.<br>\n";
                 echo "1 record added";
-                echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
+                echo "<a href=\"index.php\"> Back </a>";
             } else {
                 die('Error: ' . print pg_last_error($db_handle));
             }
@@ -128,7 +131,7 @@
                 echo "1 record added";
             } else {
                 die('Error: ' . print pg_last_error($db_handle));
-                echo "<a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
+                echo "<a href=\"index.php\"> Back </a>";
             }
         }
         ?>

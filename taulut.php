@@ -10,12 +10,15 @@ and open the template in the editor.
     </head>
     <body>
         <?php
+        
+        include('yhteys.php');
         // Tyyppimuuttuja sisään
         $type = $_POST["type"];
 
         // Tietokannan alustus
-        $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-        $db_handle = pg_connect($options);
+        //$options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
+        
+        $db_handle = dbconnect();
 
         $query = "select c.relname FROM pg_catalog.pg_class c LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind IN ('r','') AND n.nspname NOT IN ('pg_catalog', 'pg_toast') AND pg_catalog.pg_table_is_visible(c.oid)";
         $result = pg_exec($db_handle, $query);
@@ -47,7 +50,7 @@ and open the template in the editor.
         }
         ?>
         <p> Liita opiskelija vaaliliittoon. </p>
-        <form name="taulut" action="http://www.cs.uta.fi/~vm92179/taulut.php" method="post">
+        <form name="taulut" action="taulut.php" method="post">
             <input type="hidden" name="type" value="taulut" />
             Taulu jonka sisalto listataan:
             <SELECT NAME="taulu">

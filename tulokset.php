@@ -10,9 +10,10 @@ and open the template in the editor.
     </head>
     <body>
         <?php
+        include('yhteys.php');
         // Tietokannan alustus
-        $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-        $db_handle = pg_connect($options);
+        //$options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
+        $db_handle = dbconnect();
 
         // Alustetaan muuttujia
         $arvontaluku = -1;
@@ -143,7 +144,7 @@ and open the template in the editor.
             echo "Error!\n<br>";
             die('Error: ' . print pg_last_error($db_handle));
         }
-        echo "<br><a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
+        echo "<br><a href=\"index.php\"> Back </a>";
         ?>
     </body>
 </html>

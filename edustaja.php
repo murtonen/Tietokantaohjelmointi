@@ -10,8 +10,10 @@ and open the template in the editor.
     </head>
     <body>
     <?php
-    $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-    $db_handle = pg_connect($options);
+    include("yhteys.php");
+    
+    //$options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
+    $db_handle = dbconnect();
     $query="SELECT * FROM opiskelija";
     $result = pg_exec($db_handle, $query);
     $selects="";
@@ -23,7 +25,7 @@ and open the template in the editor.
     }
     ?>
     <p> Lisaa opiskelija edustajaksi </p>
-    <form action="http://www.cs.uta.fi/~vm92179/script.php" method="post">      
+    <form action="script.php" method="post">      
     <input type="hidden" name="type" value="edustaja" />
     Opiskelijanumero: 
     <SELECT NAME="numero">

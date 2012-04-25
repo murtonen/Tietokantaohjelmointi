@@ -10,6 +10,8 @@ and open the template in the editor.
     </head>
     <body>
         <?php
+        include("yhteys.php");
+        
         // Alustetaan muuttujia
         $arvontaluku = -1;
         $edellinen = -1;
@@ -24,8 +26,8 @@ and open the template in the editor.
         $edustajat = array();
       
         // Tietokannan alustus
-        $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-        $db_handle = pg_connect($options);
+        //$options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
+        $db_handle = dbconnect();
 
         // Kysely
         $query = "SELECT tunnus FROM vaaliliitto";
@@ -343,7 +345,8 @@ and open the template in the editor.
             echo "Error!\n<br>";
             die('Error: ' . print pg_last_error($db_handle));
         }
-        echo "<br><a href=\"http://www.cs.uta.fi/~vm92179/index.php\"> Back </a>";
         ?>
+        <br><a href="index.php"> Back </a>"
+        
     </body>
 </html>

@@ -8,8 +8,10 @@
 <p><H1> Hei! Tervetuloa valtavan hienoon tietokantaohjelmaan! </H1></p>
 
 <?php
-$options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='xxxxxxx' dbname='vm92179' ";
-$db_handle = pg_connect($options);
+include('yhteys.php');
+
+//$options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='xxxxxxx' dbname='vm92179' ";
+$db_handle = dbconnect();
 $query = "select opnum from yk.opiskelija";
 $result = pg_exec($db_handle, $query);
 if ($result) {

@@ -10,7 +10,7 @@ and open the template in the editor.
     </head>
     <body>
         <p> Lisaa uusi vaalirengas.</p>
-        <form name="vaalirengas" action="http://www.cs.uta.fi/~vm92179/script.php" method="post">
+        <form name="vaalirengas" action="script.php" method="post">
             <input type="hidden" name="type" value="vaalirengas" />
             Vaalirenkaan nimi: <input type="text" name="nimi" />
             Vaalirenkaan tunnus: <input type="text" name="tunnus" /><br /> <br />

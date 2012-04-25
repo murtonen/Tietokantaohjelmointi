@@ -10,8 +10,10 @@ and open the template in the editor.
     </head>
     <body>
     <?php
-    $options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
-    $db_handle = pg_connect($options);
+    include('yhteys.php');
+    
+    //$options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
+    $db_handle = dbconnect();
     $query="SELECT * FROM aanestyspaikka";
     $result = pg_exec($db_handle, $query);
     $selects="";
@@ -32,7 +34,7 @@ and open the template in the editor.
     }
     ?>
         <p> Lisaa edustajan saamat aanet. </p>
-        <form name="aanet" action="http://www.cs.uta.fi/~vm92179/script.php" method="post">
+        <form name="aanet" action="script.php" method="post">
         <input type="hidden" name="type" value="aanet" />
         <table border="0" >
 	<tr>

@@ -10,7 +10,7 @@ and open the template in the editor.
     </head>
     <body>
         <p> Lisaa uusi vaaliliitto.</p>
-        <form name="vaaliliitto" action="http://www.cs.uta.fi/~vm92179/script.php" method="post">
+        <form name="vaaliliitto" action="script.php" method="post">
             <input type="hidden" name="type" value="vaaliliitto" />
             Vaaliliiton nimi: <input type="text" name="nimi" />
             Vaaliliiton tunnus: <input type="text" name="tunnus" /><br /> <br />
