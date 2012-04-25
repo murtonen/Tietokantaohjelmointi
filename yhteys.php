@@ -8,7 +8,7 @@
             $dbname = "";
             
             $options =  " host='$host' port='$port' user='$username' password='$password' dbname='$dbname' ";
-            $dbcon = pg_connect($dbname);
+            $dbcon = pg_connect($options);
             return $dbcon;
     
         } 
