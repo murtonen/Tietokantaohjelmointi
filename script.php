@@ -129,6 +129,20 @@
             if ($result) {
                 echo "The query executed successfully.<br>\n";
                 echo "1 record added";
+                echo "<a href=\"index.php\"> Back </a>";
+            } else {
+                die('Error: ' . print pg_last_error($db_handle));
+                echo "<a href=\"index.php\"> Back </a>";
+            }
+        } else if ($type== "lpaikka") {
+            $nimi = $_POST["nimi"];
+            $tunnus = $_POST["tunnus"];
+            $query = "INSERT INTO aanestyspaikka VALUES('$nimi', '$tunnus')";
+            $result = pg_exec($db_handle, $query);
+            if ($result) {
+                echo "The query executed successfully.<br>\n";
+                echo "1 record added \n";
+                echo "<a href=\"index.php\"> Back </a>";
             } else {
                 die('Error: ' . print pg_last_error($db_handle));
                 echo "<a href=\"index.php\"> Back </a>";
