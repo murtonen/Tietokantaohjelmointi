@@ -1,0 +1,38 @@
+CREATE TABLE opiskelija (
+opiskelijanumero INTEGER PRIMARY KEY NOT NULL,
+Etunimi VARCHAR(20) NOT NULL,
+Sukunimi VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE aanestyspaikka (
+nimi varchar(30) NOT NULL,
+tunnus varchar(10) PRIMARY KEY NOT NULL
+);
+
+create table vaalirengas(
+nimi varchar(30) NOT NULL,
+tunnus varchar(10) PRIMARY KEY NOT NULL
+);
+
+
+CREATE TABLE vaaliliitto (
+nimi VARCHAR(30) NOT NULL,
+tunnus VARCHAR(10) PRIMARY KEY NOT NULL,
+vaalirengas VARCHAR(10) REFERENCES vaalirengas(tunnus)
+);
+
+
+CREATE TABLE edustaja (
+vaalinumero INTEGER REFERENCES opiskelija(opiskelijanumero) PRIMARY KEY NOT NULL,
+vaaliliitto VARCHAR(10) REFERENCES vaaliliitto(tunnus),
+vaalirengas VARCHAR(10) REFERENCES vaalirengas(tunnus),
+vertailuluku DOUBLE PRECISION,
+rengasvertailuluku DOUBLE PRECISION,
+arvonnoissa VARCHAR(10)
+);
+
+CREATE TABLE paikka_aanet (
+ehdokas_id INTEGER NOT NULL REFERENCES edustaja(vaalinumero),
+paikka_tunnus VARCHAR(10) NOT NULL REFERENCES aanestyspaikka(tunnus),
+lkm INTEGER
+);

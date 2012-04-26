@@ -23,7 +23,7 @@
     $db_handle = dbconnect();
     
     // Muodostetaan query
-    $query = "SELECT * FROM opiskelija, edustaja, paikka_aanet WHERE opiskelija.opiskelijanumero=edustaja.vaalinumero ". 
+    $query = "SELECT opiskelijanumero, etunimi,sukunimi,vaaliliitto,vaalirengas,lkm FROM opiskelija, edustaja, paikka_aanet WHERE opiskelija.opiskelijanumero=edustaja.vaalinumero ". 
         "AND paikka_aanet.ehdokas_id=edustaja.vaalinumero ORDER BY vaaliliitto,lkm desc";
     $result = pg_exec($db_handle, $query);
     while ($row = pg_fetch_row($result)) {
@@ -41,15 +41,15 @@
             echo "</td>\n";
             
             echo "<td>";
+            echo $row[3];
+            echo "</td>\n";
+            
+            echo "<td>";
             echo $row[4];
             echo "</td>\n";
             
             echo "<td>";
             echo $row[5];
-            echo "</td>\n";
-            
-            echo "<td>";
-            echo $row[11];
             echo "</td>\n";
         echo "</tr>";
     }
