@@ -34,7 +34,8 @@
             } else {
                 $valid = false;
             }
-            if (!empty($enimi) && !empty($snimi) && !empty($numero) && filter_var('$numero', FILTER_VALIDATE_INT) && $valid) {
+
+            if (!empty($enimi) && !empty($snimi) && !empty($numero) && $valid) {
 
                 // Muodostetaan query
                 $query = "insert into Opiskelija values('$numero','$enimi','$snimi')";
@@ -64,7 +65,7 @@
                 $valid = false;
             }
             // Tarkistetaan tyhjien varalta
-            if (!empty($numero) && filter_var('$numero', FILTER_VALIDATE_INT) && $valid) {
+            if (!empty($numero) && $valid) {
 
                 // Muodostetaan query
                 $query = "insert into Edustaja values('$numero')";
@@ -120,7 +121,7 @@
             }
 
             // Validointi
-            if (!empty($numero) && filter_var('$numero', FILTER_VALIDATE_INT) && $valid && !empty($vaaliliitto)) {
+            if (!empty($numero) && $valid && !empty($vaaliliitto)) {
                 // Muodostetaan query
                 $query = "update edustaja set vaaliliitto = '$vaaliliitto' where vaalinumero = '$numero'";
                 $result = pg_exec($db_handle, $query);
@@ -150,7 +151,7 @@
             }
 
             // Validointi
-            if (!empty($numero) && filter_var('$numero', FILTER_VALIDATE_INT) && $valid && !empty($vaalirengas)) {
+            if (!empty($numero) && $valid && !empty($vaalirengas)) {
 
                 // Kyselyn muodostaminen
                 $query = "update edustaja set vaalirengas = '$vaalirengas' where vaalinumero = '$numero'";
@@ -182,10 +183,11 @@
             }
 
             // Validointi
-            if (!empty($numero) && filter_var('$numero', FILTER_VALIDATE_INT) && $valid && !empty($vaaliliitto)) {
+            if (!empty($numero) && $valid && !empty($vaaliliitto) && !empty($edustaja)) {
                 // Kyselyn muodostaminen
                 $query = "insert into paikka_aanet values('$edustaja','$aanestyspaikka','$numero')";
                 $result = pg_exec($db_handle, $query);
+                // Tarkastetaan onnistuiko ja annetaan ilmoitus
                 if ($result) {
                     echo "The query executed successfully.<br>\n";
                     echo "1 record added";
@@ -221,10 +223,15 @@
             }
         } else if ($type == "lpaikka") {
             // Muuttujat sisään ja validointi
+
             $nimi = filter_var($_POST["nimi"], FILTER_SANITIZE_STRING);
             $ptunnus = filter_var($_POST["ptunnus"], FILTER_SANITIZE_STRING);
+
+            // Validointi
             if (!empty($nimi) && (!empty($ptunnus))) {
+                // Kyselyn muodostaminen
                 $query = "INSERT INTO aanestyspaikka VALUES('$nimi', '$tunnus')";
+                // Tarkastetaan onnistuiko ja annetaan ilmoitus
                 $result = pg_exec($db_handle, $query);
                 if ($result) {
                     echo "The query executed successfully.<br>\n";
@@ -239,7 +246,7 @@
                 echo "<br><a href=\"index.php\"> Back </a>";
             }
         } else {
-         echo "Missing or incorrect input or hacking attempt!";
+            echo "Missing or incorrect input or hacking attempt!";
         }
         ?>
     </body>
