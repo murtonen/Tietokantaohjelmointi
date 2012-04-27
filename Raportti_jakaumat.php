@@ -5,12 +5,17 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Liita edustaja vaaliliittoon tai vaalirenkaaseen.</title>
+        <title>Aanten jakautuminen aanestyspaikalla.</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
         <?php
         include('yhteys.php');
+        
+        // Tyyppimuuttujan putsaus
+        $to_san = $_POST["type"];
+        $sanitized = filter_var($to_san, FILTER_SANITIZE_STRING);
+        $type = $sanitized;
 
         $db_handle = dbconnect();
         $query = " select distinct nimi,tunnus from aanestyspaikka,paikka_aanet where aanestyspaikka.tunnus = paikka_aanet.paikka_tunnus";
@@ -22,7 +27,7 @@ and open the template in the editor.
             $tunnus = $row[1];
             $selects.="<OPTION VALUE=\"$tunnus\">" . $nimi . '</option>';
         }
-        if ($type == $paikka) {
+        if ($type == "paikka") {
 
             // Validointi ja sanitointi
             $tunnus = filter_var($_POST["tunnus"], FILTER_SANITIZE_STRING);
@@ -35,8 +40,7 @@ and open the template in the editor.
                         $kokonaisaania = $row[0];
                     }
                 } else {
-                    die('Error: ' . print pg_last_error($db_handle));
-                    echo "<a href=\"index.php\"> Back </a>";
+;
                 }
                 $query = "select ehdokas_id,sum(lkm) from paikka_aanet,aanestyspaikka where aanestyspaikka.tunnus = paikka_aanet.paikka_tunnus AND paikka_tunnus='$tunnus' group by ehdokas_id order by sum desc";
                 $result = pg_exec($db_handle, $query);
@@ -105,8 +109,9 @@ and open the template in the editor.
                     echo "<td>\n";
                     echo "Aanet\n";
                     echo "</td>\n";
-                    echo "<tr>\n";
+                    echo "</tr>\n";
                     while ($row = pg_fetch_row($result)) {
+                        echo "<tr>\n";
                         $sarakkeita = count($row);
                         for ($i = 0; $i < $sarakkeita; $i++) {
                             echo "<td>\n";
@@ -122,8 +127,7 @@ and open the template in the editor.
                 }
             }
         } else {
-            die('Error: ' . print pg_last_error($db_handle));
-            echo "<a href=\"index.php\"> Back </a>";
+;
         }
         ?>
         <p> Äänet paikoittain. </p>
@@ -135,5 +139,6 @@ and open the template in the editor.
             </SELECT>
             <input type="submit" value="submit">
         </form>
+        <a href="index.php"> back </a>
     </body>
 </html>

@@ -144,6 +144,12 @@ and open the template in the editor.
             echo "Error!\n<br>";
             die('Error: ' . print pg_last_error($db_handle));
         }
+        // Poistetaan vanha taulu mikäli sellainen on
+        $query = "drop table viralliset_tulokset";
+        $result = pg_exec($db_handle, $query);
+        // Ja laitetaan temptaulu viralliseksi tulostauluksi
+        $query = "select * into viralliset_tulokset from tulos";
+        $result = pg_exec($db_handle, $query);
         echo "<br><a href=\"index.php\"> Back </a>";
         ?>
     </body>
