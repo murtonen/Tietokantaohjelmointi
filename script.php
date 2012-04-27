@@ -13,8 +13,9 @@
         include('yhteys.php');
 
         // Tyyppimuuttujan putsaus
-        $sanitize = filter_var('$_POST["type"]', FILTER_SANITIZE_STRING);
-        $type = $sanitize;
+        $to_san = $_POST["type"];
+        $sanitized = filter_var($to_san, FILTER_SANITIZE_STRING);
+        $type = $sanitized;
 
         // Tietokannan alustus
         //$options = " host='dbstud.sis.uta.fi' port='5432' user='vm92179' password='salabug1' dbname='vm92179' ";
@@ -23,9 +24,9 @@
         if ($type == "opiskelija") {
 
             // Opiskelijan muuttujat sisaan
-            $enimi = filter_var('$_POST["enimi"]', FILTER_SANITIZE_STRING);
-            $snimi = filter_var('$_POST["snimi"]', FILTER_SANITIZE_STRING);
-            $numero = filter_var('$_POST["numero"]', FILTER_SANITIZE_NUMBER_INT);
+            $enimi = filter_var($_POST["enimi"], FILTER_SANITIZE_STRING);
+            $snimi = filter_var($_POST["snimi"], FILTER_SANITIZE_STRING);
+            $numero = filter_var($_POST["numero"], FILTER_SANITIZE_NUMBER_INT);
 
             // Tarkistetaan ettei ollu tyhjia ja että numero on validi int and oikealla rangella
             if ($numero > 9999 && $numero < 100000) {
@@ -54,7 +55,7 @@
         } else if ($type == "edustaja") {
 
             // Edustajan opiskelijanumero sisaan
-            $numero = filter_var('$_POST["numero"]', FILTER_SANITIZE_NUMBER_INT);
+            $numero = filter_var($_POST["numero"], FILTER_SANITIZE_NUMBER_INT);
 
             // Validointi
             if ($numero > 9999 && $numero < 100000) {
@@ -84,8 +85,8 @@
         } else if ($type == "vaaliliitto") {
 
             // Muuttujat sisaan ja niiden sanitointi
-            $nimi = filter_var('$_POST["nimi"]', FILTER_SANITIZE_STRING);
-            $tunnus = filter_var('$_POST["tunnus"]', FILTER_SANITIZE_STRING);
+            $nimi = filter_var($_POST["nimi"], FILTER_SANITIZE_STRING);
+            $tunnus = filter_var($_POST["tunnus"], FILTER_SANITIZE_STRING);
 
             // Validointi
             if (!empty($nimi) && !empty($tunnus)) {
@@ -108,8 +109,8 @@
         } else if ($type == "liitto") {
 
             // Muuttujat sisaan ja niiden sanitointi
-            $numero = filter_var('$_POST["numero"]', FILTER_SANITIZE_NUMBER_INT);
-            $vaaliliitto = filter_var('$_POST["vaaliliitto"]', FILTER_SANITIZE_STRING);
+            $numero = filter_var($_POST["numero"], FILTER_SANITIZE_NUMBER_INT);
+            $vaaliliitto = filter_var($_POST["vaaliliitto"], FILTER_SANITIZE_STRING);
 
             // Validointi
             if ($numero > 9999 && $numero < 100000) {
@@ -138,8 +139,8 @@
             }
         } else if ($type == "rengas") {
             // Muuttujat sisaan ja niiden validointi
-            $numero = filter_var('$_POST["numero"]', FILTER_SANITIZE_NUMBER_INT);
-            $vaalirengas = filter_var('$_POST["vaalirengas"]', FILTER_SANITIZE_STRING);
+            $numero = filter_var($_POST["numero"], FILTER_SANITIZE_NUMBER_INT);
+            $vaalirengas = filter_var($_POST["vaalirengas"], FILTER_SANITIZE_STRING);
 
             // Validointi
             if ($numero > 9999 && $numero < 100000) {
@@ -169,9 +170,9 @@
             }
         } else if ($type == 'aanet') {
             // Muuttujat sisaan ja validointi
-            $numero = filter_var('$_POST["numero"]', FILTER_SANITIZE_NUMBER_INT);
-            $edustaja = filter_var('$_POST["edustaja"]', FILTER_SANITIZE_NUMBER_INT);
-            $vaaliliitto = filter_var('$_POST["vaaliliitto"]', FILTER_SANITIZE_STRING);
+            $numero = filter_var($_POST["numero"], FILTER_SANITIZE_NUMBER_INT);
+            $edustaja = filter_var($_POST["edustaja"], FILTER_SANITIZE_NUMBER_INT);
+            $vaaliliitto = filter_var($_POST["vaaliliitto"], FILTER_SANITIZE_STRING);
 
             // Validointi
             if ($edustaja > 9999 && $edustaja < 100000 && $numero >= 0) {
@@ -199,8 +200,8 @@
         } else if ($type == "vaalirengas") {
             // Muuttujat sisaan ja validointi
 
-            $nimi = filter_var('$_POST["nimi"]', FILTER_SANITIZE_STRING);
-            $tunnus = filter_var('$_POST["tunnus"]', FILTER_SANITIZE_STRING);
+            $nimi = filter_var($_POST["nimi"], FILTER_SANITIZE_STRING);
+            $tunnus = filter_var($_POST["tunnus"], FILTER_SANITIZE_STRING);
 
             // Validointi
             if (!empty($nimi) && (!empty($tunnus))) {
@@ -220,9 +221,9 @@
             }
         } else if ($type == "lpaikka") {
             // Muuttujat sisään ja validointi
-            $nimi = filter_var('$_POST["nimi"]', FILTER_SANITIZE_STRING);
-            $tunnus = filter_var('$_POST["tunnus"]', FILTER_SANITIZE_STRING);
-            if (!empty($nimi) && (!empty($tunnus))) {
+            $nimi = filter_var($_POST["nimi"], FILTER_SANITIZE_STRING);
+            $ptunnus = filter_var($_POST["ptunnus"], FILTER_SANITIZE_STRING);
+            if (!empty($nimi) && (!empty($ptunnus))) {
                 $query = "INSERT INTO aanestyspaikka VALUES('$nimi', '$tunnus')";
                 $result = pg_exec($db_handle, $query);
                 if ($result) {
