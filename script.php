@@ -245,9 +245,56 @@
                 echo "Missing or incorrect input!";
                 echo "<br><a href=\"index.php\"> Back </a>";
             }
-        } else {
-            echo "Missing or incorrect input or hacking attempt!";
-        }
-        ?>
+        } else if ($type == "lisaafile") {
+            if ($_FILES["file"]["error"] > 0) {
+                echo "Error: " . $_FILES["file"]["error"] . "<br />";
+            } else {
+                $file_handle = fopen($_FILES["file"]["tmp_name"], "r");
+                while (!feof($file_handle)) {
+                    $line = fgets($file_handle);
+                    $rivit[] = $line;
+                }
+                fclose($file_handle);
+                foreach ($rivit as $rivi) {
+                    $splitted = split(":", $rivi);
+
+                    if (!empty($splitted[0]) && !empty($splitted[1]) && !empty($splitted[2])) {
+                        // Opiskelijan muuttujat sisaan
+                        $enimi = filter_var($splitted[0], FILTER_SANITIZE_STRING);
+                        $snimi = filter_var($splitted[1], FILTER_SANITIZE_STRING);
+                        $numero = filter_var($splitted[2], FILTER_SANITIZE_NUMBER_INT);
+
+                        // Tarkistetaan ettei ollu tyhjia ja että numero on validi int and oikealla rangella
+                        if ($numero > 9999 && $numero < 100000) {
+                            $valid = true;
+                        } else {
+                            $valid = false;
+                        }
+
+                        if (!empty($enimi) && !empty($snimi) && !empty($numero) && $valid) {
+                            // Muodostetaan query
+                            $query = "insert into Opiskelija values('$numero','$enimi','$snimi')";
+                            $result = pg_exec($db_handle, $query);
+                            // Tarkastetaan onnistuiko ja annetaan ilmoitus
+                            if ($result) {
+                                echo "The query executed successfully.<br>\n";
+                                echo "Opiskelija: $numero added.\n<br>";
+                            } else {
+                                echo "Virhe syotteessa!\n<br>";
+                            }
+                        } else {
+                            echo "Missing or incorrect input!";
+                        }
+                    } else {
+                            echo "Row formatted incorrectly: $rivi \n<br>";
+                    }
+                }
+                echo "<a href=\"index.php\"> Back </a>";
+            }
+            
+            } else {
+                echo "Missing or incorrect input or hacking attempt!";
+            }
+            ?>
     </body>
 </html>
