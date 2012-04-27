@@ -15,6 +15,7 @@
 <a href="lisaa_paikka.html"> lisaa aanestyspaikka </a><br>
 <a href="jarjestysluvut.php"> jarjestysluvut</a><br>
 <a href="tulokset.php"> tulokset</a><br>
+<a href="taulut.php"> taulut </a><br>
 
 </body>
 </html>

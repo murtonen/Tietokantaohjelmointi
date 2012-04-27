@@ -237,6 +237,8 @@
                 echo "Missing or incorrect input!";
                 echo "<br><a href=\"index.php\"> Back </a>";
             }
+        } else {
+         echo "Missing or incorrect input or hacking attempt!";
         }
         ?>
     </body>

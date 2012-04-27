@@ -346,7 +346,7 @@ and open the template in the editor.
             die('Error: ' . print pg_last_error($db_handle));
         }
         ?>
-        <br><a href="index.php"> Back </a>"
+        <br><a href="index.php"> Back </a>
         
     </body>
 </html>
