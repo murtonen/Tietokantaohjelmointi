@@ -16,6 +16,7 @@
 <a href="jarjestysluvut.php"> jarjestysluvut</a><br>
 <a href="tulokset.php"> tulokset</a><br>
 <a href="taulut.php"> taulut </a><br>
-
+<a href ="Aanijakaumat.php"> aanijakaumat liitottain/renkaittain </a><br>
+<a href ="Raportti_jakaumat.php"> aanijakaumat paikoittain</a><br>
 </body>
 </html>
