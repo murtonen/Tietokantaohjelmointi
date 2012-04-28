@@ -133,6 +133,23 @@ CREATE TABLE vaalirengas (
 
 ALTER TABLE public.vaalirengas OWNER TO vm92179;
 
+--
+-- Name: viralliset_tulokset; Type: TABLE; Schema: public; Owner: vm92179; Tablespace: 
+--
+
+CREATE TABLE viralliset_tulokset (
+    id integer,
+    edustaja integer,
+    vaaliliitto character varying(10),
+    vaalirengas character varying(10),
+    liittoluku double precision,
+    rengasluku double precision,
+    arvonnoissa character varying(10)
+);
+
+
+ALTER TABLE public.viralliset_tulokset OWNER TO vm92179;
+
 SET search_path = tk, pg_catalog;
 
 --
