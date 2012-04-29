@@ -169,6 +169,30 @@
                 echo "Missing or incorrect input!";
                 echo "<br><a href=\"index.php\"> Back </a>";
             }
+        } else if ($type == "liitaliitto") {
+            // Muuttujat sisaan ja niiden validointi
+            $vaaliliitto = filter_var($_POST["vaaliliitto"], FILTER_SANITIZE_STRING);
+            $vaalirengas = filter_var($_POST["vaalirengas"], FILTER_SANITIZE_STRING);
+
+            // Validointi
+            if (!empty($vaaliliitto) && !empty($vaalirengas)) {
+
+                // Kyselyn muodostaminen
+                $query = "update vaaliliitto set vaalirengas = '$vaalirengas' where tunnus = '$vaaliliitto'";
+                $result = pg_exec($db_handle, $query);
+                // Tarkastetaan onnistuiko ja annetaan ilmoitus
+
+                if ($result) {
+                    echo "The query executed successfully.<br>\n";
+                    echo "1 record added";
+                    echo "<a href=\"index.php\"> Back </a>";
+                } else {
+                    die('Error: ' . print pg_last_error($db_handle));
+                }
+            } else {
+                echo "Missing or incorrect input!";
+                echo "<br><a href=\"index.php\"> Back </a>";
+            }
         } else if ($type == 'aanet') {
             // Muuttujat sisaan ja validointi
             $numero = filter_var($_POST["numero"], FILTER_SANITIZE_NUMBER_INT);
